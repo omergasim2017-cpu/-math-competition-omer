@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>مسابقة الرياضيات — أستاذ عمر قاسم</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Tahoma,sans-serif;background:linear-gradient(135deg,#08152f,#12606d);color:#fff;min-height:100vh}button{font:inherit;cursor:pointer}.app{max-width:1200px;margin:auto;padding:20px}.top{display:flex;justify-content:space-between;align-items:center;gap:12px}.brand h1{margin:0;font-size:clamp(27px,5vw,44px)}.brand p{opacity:.8}.nav button,.secondary{padding:10px 15px;border:0;border-radius:12px;background:#ffffff20;color:#fff}.scores{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:20px 0}.team{background:#ffffff15;border:1px solid #ffffff25;border-radius:15px;padding:12px;text-align:center}.pts{font-size:28px;font-weight:bold;margin-top:5px}.main{background:#fff;color:#14243a;border-radius:24px;padding:30px;min-height:550px}.center{text-align:center;display:flex;min-height:480px;align-items:center;justify-content:center;flex-direction:column}.hero{font-size:clamp(38px,7vw,65px);margin:10px}.sub{font-size:19px;color:#60738d;line-height:1.8}.primary{background:#1267d8;color:#fff;border:0;border-radius:14px;padding:15px 26px;font-weight:bold;font-size:19px}.head{display:flex;justify-content:space-between;align-items:center}.badge,.timer{padding:9px 13px;border-radius:11px;background:#eaf2ff;color:#1267d8;font-weight:bold}.timer{background:#fff1df;color:#ad5c00}.q{font-size:clamp(25px,4vw,38px);line-height:1.5}.choices{display:grid;grid-template-columns:1fr 1fr;gap:14px}.choice{padding:20px;border:2px solid #dce5ef;border-radius:15px;background:#f5f8fb;text-align:right;font-size:20px}.selected{border-color:#1267d8;background:#eaf2ff}.correct{border-color:#19945a;background:#e9fff3}.wrong{border-color:#d33;background:#fff0f0}.explain{margin:18px 0;padding:15px;border-right:5px solid #1267d8;background:#f4f9ff;line-height:1.8}.teams{display:grid;grid-template-columns:repeat(5,1fr);gap:9px}.teambtn{padding:14px 7px;border:0;border-radius:13px;background:#12345b;color:#fff;font-weight:bold}.done{background:#19945a}.controls,.manual{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}.manual button{border:0;border-radius:8px;padding:7px 10px}.rank{display:flex;justify-content:space-between;padding:15px;background:#f3f6fa;border-radius:12px;margin:8px auto;max-width:700px}.winner{background:#fff1bd;border:2px solid #d9ad20}@media(max-width:800px){.scores{grid-template-columns:repeat(2,1fr)}.choices,.teams{grid-template-columns:1fr}.main{padding:18px}.top{align-items:flex-start;flex-direction:column}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="top"><div class="brand"><h1>🏆 مسابقة الرياضيات</h1><p>أستاذ عمر قاسم • مسابقة صفية تفاعلية</p></div>
+<nav><button onclick="home()">الرئيسية</button> <button onclick="rules()">القواعد</button></nav></header>
+<section id="scores" class="scores"></section><main id="main" class="main"></main>
+</div>
+<script>
+const teams=['فريق النخبة','فريق العباقرة','فريق المتفوقين','فريق الأبطال','فريق القمة'];
+const qs=[
+['ما قيمة 25% من 80؟',['10','15','20','25'],2,'0.25×80=20.'],
+['إذا كان 3x + 5 = 20، فما قيمة x؟',['3','5','7','15'],1,'3x=15 ثم x=5.'],
+['النسبة 2 : 5 تساوي أي نسبة؟',['4 : 8','6 : 15','8 : 25','10 : 15'],1,'نضرب الطرفين في 3.'],
+['محيط مستطيل طوله 8 سم وعرضه 5 سم؟',['13 سم','26 سم','40 سم','80 سم'],1,'2(8+5)=26 سم.'],
+['ما قيمة 3² + 4²؟',['7','12','25','49'],2,'9+16=25.'],
+['5 أقلام تكلف 20 درهمًا؛ كم تكلف 8 أقلام؟',['24','28','32','40'],2,'سعر القلم 4 دراهم؛ 8×4=32.'],
+['أي عدد مما يلي أولي؟',['21','27','29','33'],2,'29 عدد أولي.'],
+['مساحة مثلث قاعدته 10 سم وارتفاعه 6 سم؟',['16 سم²','30 سم²','60 سم²','120 سم²'],1,'½×10×6=30 سم².'],
+['إذا كانت y=2x+1، فما قيمة y عندما x=4؟',['7','8','9','10'],2,'2×4+1=9.'],
+['ما الكسر المكافئ لـ 3/4؟',['6/10','8/12','9/12','12/20'],2,'3/4=9/12.'],
+['متوسط الأعداد 6 و8 و10؟',['7','8','9','10'],1,'24÷3=8.'],
+['زاويتان متتامتان، إحداهما 35°؛ الأخرى؟',['45°','55°','65°','145°'],1,'90−35=55°.'],
+['إذا زاد سعر 200 درهم بنسبة 10%، فالسعر الجديد؟',['210','220','230','240'],1,'200+20=220.'],
+['حل المتباينة x+7>12؟',['x>5','x<5','x>19','x<19'],0,'نطرح 7 من الطرفين.'],
+['حجم مكعب طول حرفه 4 سم؟',['16 سم³','32 سم³','48 سم³','64 سم³'],3,'4³=64 سم³.']
+];
+let s={page:'home',q:0,sel:null,reveal:false,award:null,score:[0,0,0,0,0],sec:60};
+let timer=null;
+function save(){localStorage.setItem('mathOmer',JSON.stringify(s))}
+function load(){try{let x=JSON.parse(localStorage.getItem('mathOmer'));if(x)s=x}catch(e){}}
+function scores(){document.getElementById('scores').innerHTML=teams.map((t,i)=>`<div class="team"><b>${t}</b><div class="pts">${s.score[i]}</div><small>نقطة</small></div>`).join('')}
+function home(){clearInterval(timer);timer=null;s={page:'home',q:0,sel:null,reveal:false,award:null,score:[0,0,0,0,0],sec:60};save();render()}
+function start(){clearInterval(timer);timer=null;s={page:'game',q:0,sel:null,reveal:false,award:null,score:[0,0,0,0,0],sec:60};save();render()}
+function render(){scores();if(s.page==='home')homeView();else if(s.page==='result')result();else game()}
+function homeView(){main.innerHTML=`<div class="center"><div style="font-size:70px">➗</div><h2 class="hero">جاهزون للتحدي؟</h2><p class="sub">15 سؤالًا • 5 فرق • 10 نقاط للسؤال<br>مسابقة تفاعلية للصف.</p><button class="primary" onclick="start()">ابدأ المسابقة</button></div>`}
+function game(){let q=qs[s.q],L=['أ','ب','ج','د'];main.innerHTML=`<div class="head"><span class="badge">السؤال ${s.q+1} من 15</span><span class="timer">⏱ ${s.sec} ثانية</span></div><h2 class="q">${q[0]}</h2><div class="choices">${q[1].map((x,i)=>`<button class="choice ${s.sel===i?'selected':''} ${s.reveal&&i===q[2]?'correct':''} ${s.reveal&&s.sel===i&&i!==q[2]?'wrong':''}" onclick="answer(${i})">${L[i]}) ${x}</button>`).join('')}</div>${s.reveal?`<div class="explain"><b>الإجابة الصحيحة: ${L[q[2]]}) ${q[1][q[2]]}</b><br>${q[3]}</div><h3>من أجاب؟</h3><div class="teams">${teams.map((t,i)=>`<button class="teambtn ${s.award===i?'done':''}" onclick="award(${i})" ${s.award!==null?'disabled':''}>${t}<br>${s.award===i?'✓ تم التسجيل':'+10 نقاط'}</button>`).join('')}</div>`:''}<div class="controls"><button class="secondary" onclick="toggleTimer()">${timer?'إيقاف المؤقت':'تشغيل المؤقت'}</button><button class="secondary" onclick="resetTimer()">إعادة المؤقت</button>${s.reveal&&s.award!==null?`<button class="primary" onclick="next()">${s.q===14?'النتيجة النهائية':'السؤال التالي'}</button>`:''}</div><div class="manual"><b>تعديل النقاط:</b>${teams.map((t,i)=>`<span>${t} <button onclick="chg(${i},10)">+10</button><button onclick="chg(${i},5)">+5</button><button onclick="chg(${i},-5)">-5</button></span>`).join('')}</div>`}
+function answer(i){if(s.reveal)return;s.sel=i;s.reveal=true;clearInterval(timer);timer=null;save();render()}
+function award(i){if(!s.reveal||s.award!==null)return;s.score[i]+=10;s.award=i;save();render()}
+function chg(i,n){s.score[i]=Math.max(0,s.score[i]+n);save();scores()}
+function next(){clearInterval(timer);timer=null;if(s.q===14)s.page='result';else{s.q++;s.sel=null;s.reveal=false;s.award=null;s.sec=60}save();render()}
+function toggleTimer(){if(timer){clearInterval(timer);timer=null}else{timer=setInterval(()=>{s.sec--;if(s.sec<=0){s.sec=0;clearInterval(timer);timer=null}save();render()},1000)}render()}
+function resetTimer(){clearInterval(timer);timer=null;s.sec=60;save();render()}
+function result(){let a=teams.map((name,i)=>({name,score:s.score[i]})).sort((a,b)=>b.score-a.score);main.innerHTML=`<div class="center"><div style="font-size:70px">🏆</div><h2 class="hero" style="font-size:48px">النتيجة النهائية</h2><p class="sub">الفائز: <b>${a[0].name}</b> — ${a[0].score} نقطة</p>${a.map((x,i)=>`<div class="rank ${i===0?'winner':''}"><span>${i+1}. ${x.name}</span><b>${x.score} نقطة</b></div>`).join('')}<br><button class="primary" onclick="start()">إعادة المسابقة</button></div>`}
+function rules(){alert('قواعد المسابقة\\n\\n15 سؤالًا، كل سؤال 10 نقاط.\\nاختر الإجابة ثم اكشفها، وبعدها اختر الفريق الذي أجاب.\\nيمكن تعديل النقاط يدويًا.\\nالمؤقت اختياري ومدته 60 ثانية.')}
+load();render();
+</script>
+</body></html>
